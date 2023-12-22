@@ -1,6 +1,5 @@
 import argparse
 import csv
-import os
 import xml.etree.ElementTree as ET
 
 # Обрабатываем аргументы командной строки
