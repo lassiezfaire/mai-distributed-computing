@@ -11,7 +11,7 @@
 2.  Поиск свободных комнат (Elastic Search). Поиск по описанию, адресу и датам бронирования. Для удобства поиска по датам, при сохранении брони в MongoDB в ElasticSearch можно индексировать свободные даты.
 ### Ход работы
 1. Подготовить данные и заполнить ими таблицы
-- [x] Клиенты - пользователи StackOverflow ([XML-файл](https://archive.org/details/stackexchange))
+- [x] Клиенты - пользователи StackOverflow в XML-формате, [отсюда](https://archive.org/download/stackexchange)
 	- id
 	- name
 - [x] Комнаты - данные по г. Aarhus за 2016-10-28 с Airbnb, [отсюда](https://tomslee.net/airbnb-data-collection-get-the-data).
@@ -19,3 +19,8 @@
 	- address
 	- description
 	- attributes
+- [ ] Бронь - сгенерирована
+	- id_room
+	- id_client
+	- booking date
+	- booking status
