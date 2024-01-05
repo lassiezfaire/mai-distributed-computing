@@ -19,7 +19,7 @@
 	- address
 	- description
 	- attributes
-- [ ] Бронь - сгенерирована
+- [x] Бронь - сгенерирована
 	- id_room
 	- id_client
 	- booking date
