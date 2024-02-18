@@ -1,0 +1,12 @@
+{
+  "full_address": {
+    "address": "Тверская, 1",
+    "city": "Москва",
+    "country": "Россия"
+  },
+  "description": "Большая комната",
+  "attributes": "Балкон, Раздельный санузел",
+  "area": 20,
+  "sleeps": 3,
+  "price": 120
+}
