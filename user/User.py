@@ -1,4 +1,5 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import Field
+
 from Databases.mongoRepository import MongoRepository
 
 

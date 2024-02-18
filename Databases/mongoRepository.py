@@ -1,4 +1,5 @@
 import uuid
+
 from dotenv import dotenv_values
 from pydantic import BaseModel, Field
 from pymongo import MongoClient

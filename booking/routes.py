@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Body, Request, Response, HTTPException, status
-from typing import List
 from datetime import date
+from typing import List
+
+from fastapi import APIRouter, HTTPException, status
+
 from .Booking import Booking
 
 router = APIRouter()

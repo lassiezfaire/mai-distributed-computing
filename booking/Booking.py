@@ -28,6 +28,7 @@ class Booking(MongoRepository):
         return "Бронирование: комната " + self.room_id + " c " + self.start_date.__str__() + " по " + self.end_date.__str__()
 
     def save(self):
+        global period
         if User.get(self.user_id) is None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail=f"При попытке создания брони не удалось найти пользователя с Id = {self.room_id}")

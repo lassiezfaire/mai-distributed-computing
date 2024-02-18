@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from typing import List
+
+from fastapi import APIRouter, Body, HTTPException, status
 
 from .User import User
 
@@ -13,6 +14,7 @@ def all(limit: int = 100):
     print("  успешно")
     return rooms
 
+
 @router.get("/{id}", summary="Получить пользователя по id", response_model=User)
 def get(id: str):
     print(f"Запрос пользователя с id = {id}...", end='')
@@ -21,10 +23,10 @@ def get(id: str):
     print(" успешно")
     return user
 
+
 @router.post("/", summary="Создать нового пользователя")
 def create(user: User = Body(...)):
     print(f"Создаём нового пользователя...", end='')
     created_id = user.create()
     print(f"успешно...", end='')
     return created_id
-
