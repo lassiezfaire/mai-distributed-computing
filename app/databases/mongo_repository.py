@@ -12,8 +12,6 @@ global mongo_database
 mongo_client = MongoClient(os.environ.get("MONGO_URI"))
 mongo_database = mongo_client[os.environ["DB_NAME"]]
 
-print(mongo_database)
-
 '''
 Базовый класс для сохранения и получения объектов в/из MongoDB
 '''

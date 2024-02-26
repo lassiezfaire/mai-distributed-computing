@@ -35,4 +35,4 @@ app.include_router(room_router, tags=["Комнаты"], prefix="/room")
 app.include_router(booking_router, tags=["Бронирования"], prefix="/booking")
 
 # run this command in cmd:
-# uvicorn main:app --reload --host 0.0.0.0
+# uvicorn main:app --reload --host 0.0.0.0 --env-file .\environment.env
