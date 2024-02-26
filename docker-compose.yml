@@ -1,0 +1,167 @@
+version: '3.8'
+services:
+  mongo01:
+    command: mongod --replSet mongocluster
+    container_name: mongo01
+    image: mongo:latest
+    networks:
+      - dockernet
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata01:/data/db
+  mongo02:
+    command: mongod --replSet mongocluster
+    container_name: mongo02
+    image: mongo:latest
+    networks:
+      - dockernet
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodata02:/data/db
+  mongo03:
+    command: mongod --replSet mongocluster
+    container_name: mongo03
+    image: mongo:latest
+    networks:
+      - dockernet
+    ports:
+      - 27019:27017
+    volumes:
+      - mongodata03:/data/db
+  mongoinit:
+    container_name: mongoinit
+    depends_on:
+      - mongo01
+      - mongo02
+      - mongo03
+    entrypoint: [ "bash", "/scripts/mongo_init.sh"]
+    image: mongo:latest
+    networks:
+      - dockernet
+    volumes:
+      - ./infrastructure:/scripts
+
+  es01:
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+    image: elasticsearch:8.12.0
+    networks:
+      - dockernet
+    ports:
+      - 9201:9200
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  es02:
+    container_name: es02
+    depends_on:
+      - es01
+    environment:
+      - node.name=es02
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+    image: elasticsearch:8.12.0
+    networks:
+      - dockernet
+    ports:
+      - 9202:9200
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  es03:
+    container_name: es03
+    depends_on:
+      - es01
+    environment:
+      - node.name=es03
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=es01,es02,es03
+      - discovery.seed_hosts=es01,es02
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+    image: elasticsearch:8.12.0
+    networks:
+      - dockernet
+    ports:
+      - 9203:9200
+    volumes:
+      - esdata03:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  kibana:
+    container_name: kibana
+    depends_on:
+      - es01
+      - es02
+      - es03
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://es01:9200","http://es02:9200","http://es03:9200"]
+    image: kibana:8.12.0
+    networks:
+      - dockernet
+    ports:
+      - 5601:5601
+    volumes:
+      - kibanadata:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    networks:
+      - dockernet
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - ./infrastructure:/redis
+
+networks:
+  dockernet:
+
+volumes:
+  mongodata01:
+    driver: local
+  mongodata02:
+    driver: local
+  mongodata03:
+    driver: local
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+  esdata03:
+    driver: local
+  kibanadata:
+    driver: local
