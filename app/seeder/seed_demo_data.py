@@ -152,9 +152,9 @@ def book_room(user_id, start_date, end_date, room_id=None):
 
 
 # config = dotenv_values('data.env')
-user_parser_path = os.environ['USER_PARSER_PATH']
-user_data_path = os.environ['USER_DATA_PATH']
-room_data_path = os.environ['ROOM_DATA_PATH']
+user_parser_path = os.environ.get('USER_PARSER_PATH')
+user_data_path = os.environ.get('USER_DATA_PATH')
+room_data_path = os.environ.get('ROOM_DATA_PATH')
 
 data_parser(user_parser_path, user_data_path)
 

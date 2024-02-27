@@ -1,0 +1,6 @@
+pydantic~=2.6.2
+fastapi~=0.110.0
+python-dotenv~=1.0.1
+elasticsearch~=8.12.1
+pymongo~=4.6.2
+redlock-py~=1.0.8
