@@ -1,5 +1,26 @@
 version: '3.8'
 services:
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    container_name: app
+    environment:
+      - "MONGO_URI=mongodb://mongo01:27017,mongo02:27017,mongo03:27017/?replicaSet=mongocluster"
+      - "DB_NAME=nosql"
+      - "ELASTICSEARCH_URI=http://es01:9200,http://es02:9200,http://es03:9200"
+      - "REDIS_URI=redis:6379"
+      - "USER_PARSER_PATH=/app/data/Users.xml"
+      - "USER_DATA_PATH=/app/data/Users.csv"
+      - "ROOM_DATA_PATH=/app/data/tomslee_airbnb_auckland_0534_2016-08-19.csv"
+    image: app
+    networks:
+      - dockernet
+    ports:
+      - 8000:8000
+    volumes:
+      - ./data:/app/data
+
   mongo01:
     command: mongod --replSet mongocluster
     container_name: mongo01

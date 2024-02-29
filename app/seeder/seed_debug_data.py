@@ -89,6 +89,7 @@ def book_room(user_id, start_date, end_date, room_id=None):
 init = 1
 if init == 1:
     create_database()
+    SchedulePeriod.refresh_index()
     seed_rooms()
     seed_users()
     SchedulePeriod.refresh_index()

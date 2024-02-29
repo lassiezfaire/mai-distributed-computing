@@ -13,5 +13,11 @@ RUN pip install --no-cache-dir 'uvicorn[standard]'
 
 EXPOSE 8000
 
-COPY app .
+COPY app . 
+
+ENV PYTHONPATH "${PYTHONPATH}:/app/booking"
+ENV PYTHONPATH "${PYTHONPATH}:/app/databases"
+ENV PYTHONPATH "${PYTHONPATH}:/app/room"
+ENV PYTHONPATH "${PYTHONPATH}:/app/user"
+
 ENTRYPOINT uvicorn main:app --reload --host 0.0.0.0 --env-file ./environment.env

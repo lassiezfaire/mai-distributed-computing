@@ -161,6 +161,7 @@ data_parser(user_parser_path, user_data_path)
 init = 1
 if init == 1:
     init_database()
+    SchedulePeriod.refresh_index()
     seed_users(user_data_path)
     seed_rooms(room_data_path)
     SchedulePeriod.refresh_index()
