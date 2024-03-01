@@ -20,6 +20,7 @@ from databases.es_repository import es_client as es_schedule
 
 NO_BOOKING = '-'
 
+
 class SchedulePeriod:
     id: str | None = None
     room_id: str
@@ -28,7 +29,8 @@ class SchedulePeriod:
     booking_id: str = NO_BOOKING
     INDEX_NAME = 'schedule'
 
-    def __init__(self, room_id='', start_date=date.min, end_date=date.max, booking_id=NO_BOOKING, elasticsearch_doc=None):
+    def __init__(self, room_id='', start_date=date.min, end_date=date.max, booking_id=NO_BOOKING,
+                 elasticsearch_doc=None):
         if elasticsearch_doc is not None:  # Заполняем свойства значениями из документа ElasticSearch
             self.id = elasticsearch_doc['_id']
             self.room_id = elasticsearch_doc['_source']['room_id']
