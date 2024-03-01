@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import time
 import csv
 import random
 import os
@@ -31,6 +32,7 @@ def init_database():
             }
         }
         es_schedule.indices.create(index=SchedulePeriod.INDEX_NAME, mappings=mapping)
+        time.sleep(1)
 
 
 def data_parser(user_parser_path, user_data_path):
@@ -164,7 +166,7 @@ if init == 1:
     SchedulePeriod.refresh_index()
     seed_users(user_data_path)
     seed_rooms(room_data_path)
-    SchedulePeriod.refresh_index()
+    # SchedulePeriod.refresh_index()
     print("Базы данных инициализированы")
 for _ in range(1000):
     user = User.get_random()

@@ -1,4 +1,5 @@
 import random
+import time
 from datetime import date, timedelta
 
 from booking.booking import Booking
@@ -26,6 +27,7 @@ def create_database():
             }
         }
         es_schedule.indices.create(index=SchedulePeriod.INDEX_NAME, mappings=mapping)
+        time.sleep(1)
 
 
 def seed_users():
@@ -92,7 +94,7 @@ if init == 1:
     SchedulePeriod.refresh_index()
     seed_rooms()
     seed_users()
-    SchedulePeriod.refresh_index()
+    # SchedulePeriod.refresh_index()
     print("Базы данных инициализированы")
 #    exit(0)
 for _ in range(100):

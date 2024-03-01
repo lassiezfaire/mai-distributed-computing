@@ -44,3 +44,11 @@ docker compose up
 - elasticsearch - режим кластера, es01:9201, es02:9202, es03:9203 + kibana:5601
 - redis - redis:6379
 - приложение на python - app:8000
+### Поведение под нагрузкой
+
+| Состояние          | Работа (чтение/запись) | Отчёт | Дополнительные комментарии|
+|---|---|---|---|
+| 3 контейнера Mongo | да/да | rs.status(): https://pastebin.com/RTikbku9 | Штатный режим работы кластера. Чтение: [скриншот](https://fastpic.org/view/123/2024/0301/acff4e6955725492b7c2b80f36df51b0.png.html), запись: [скриншот](https://fastpic.org/view/123/2024/0301/5599b1e453b9f9846a34782f2e69bc5c.png.html)
+| 2 контейнера Mongo | да/да | rs.status(): https://pastebin.com/b2kGnMu8 | Остановлен PRIMARY-контейнер mongo01. Чтение: [скриншот](https://fastpic.org/view/123/2024/0301/685e9585e4f8c3d891cae48f82a7e862.png.html), запись: [скриншот](https://fastpic.org/view/123/2024/0301/275d9efc462ee224b4c94c9ba90ed8e1.png.html) 
+| 3 контейнера ES | да/да | curl -X GET "localhost:9201/_cat/nodes?v=true&pretty": https://pastebin.com/uV5bcsGc | Штатный режим работы кластера. Чтение: [скриншот](https://fastpic.org/view/123/2024/0301/dd6735390e9cc48f0a4937b8aa3217c4.png.html), запись: [скриншот](https://fastpic.org/view/123/2024/0301/_c55263403275f28a9976909221fb23b6.png.html)
+| 2 контейнера ES | да/да | curl -X GET "localhost:9201/_cat/nodes?v=true&pretty": https://pastebin.com/zwnE4p0U | Остановлен PRIMARY-контейнер es03. Чтение: [скриншот](https://fastpic.org/view/123/2024/0301/452ca130af689e309c9335ccb7001f93.png.html), запись: [скриншот](https://fastpic.org/view/123/2024/0301/_ab426f4e7e50f58bc361446546b0d4c8.png.html)
